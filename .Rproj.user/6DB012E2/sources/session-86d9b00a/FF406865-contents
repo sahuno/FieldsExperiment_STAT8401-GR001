@@ -1,0 +1,14 @@
+#feilds simulations
+library(tidyverse)
+fl <- list.files("/Users/ahunos/myWork/coursework/Spring2024/FieldsExperiment/Datasets and examples", full.names = TRUE)
+basename(fl)
+df_vietdraft <- read_delim(fl[1])
+dim(df_vietdraft)
+
+# sunmary of year
+df_vietdraft %>% dplyr::group_by(year) %>% dplyr::summarise(dplyr::n())
+
+#what are you predicting?
+
+df_3 <- read_delim(fl[3])
+view(head(df_3))

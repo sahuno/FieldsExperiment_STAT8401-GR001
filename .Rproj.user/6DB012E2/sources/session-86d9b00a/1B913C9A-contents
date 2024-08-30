@@ -1,0 +1,56 @@
+
+#install.packages("remotes")
+#remotes::install_github("MRCIEU/TwoSampleMR")
+#remotes::install_github("MRCIEU/MRInstruments")
+
+
+library(TwoSampleMR)
+options(ieugwasr_api = 'gwas-api.mrcieu.ac.uk/')
+# List available GWASs
+ao <- available_outcomes()
+View(head(ao, 100)) 
+#View(ao) 
+
+
+# Get instruments
+exposure_dat <- extract_instruments("ieu-a-2")
+View(head(exposure_dat))
+View(head(extract_instruments("ieu-a-7")))
+
+# Get effects of instruments on outcome
+outcome_dat <- extract_outcome_data(snps=exposure_dat$SNP, outcomes = "ieu-a-7")
+
+# Harmonise the exposure and outcome data
+dat <- harmonise_data(exposure_dat, outcome_dat)
+
+# Perform MR
+res <- mr(dat)
+
+
+
+
+library(MRInstruments)
+data(gwas_catalog)
+View(head(gwas_catalog))
+
+methyl_gwas <-
+  subset(gwas_catalog,
+         grepl("DNA methylation", Phenotype_simple))
+methyl_exp_dat <- format_data(methyl_gwas)
+View(methyl_gwas)
+
+data(aries_mqtl)
+
+mwas <-
+  subset(aries_mqtl,
+         grepl("SET", gene))
+unique(aries_mqtl$gene)
+setDB_exp_dat <-
+  format_aries_mqtl(subset(aries_mqtl,grepl("SET", gene)))
+
+setDB1_exp_dat <-
+  format_aries_mqtl(subset(aries_mqtl,grepl("SETD1", gene)))
+
+
+tet_exp_dat <-
+  format_aries_mqtl(subset(aries_mqtl,grepl("TET", gene)))

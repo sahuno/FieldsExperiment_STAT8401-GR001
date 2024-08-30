@@ -1,0 +1,9 @@
+#mendalian randomization
+
+#load neccessary libraries
+library(TwoSampleMR)
+
+
+options(ieugwasr_api = 'gwas-api.mrcieu.ac.uk/')
+# List available GWASs
+ao <- available_outcomes()
